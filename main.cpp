@@ -8,6 +8,22 @@
 #include <iostream>
 using namespace std;
 int i=0;
+int x;
+
+//pointers and references
+
+void pointers_references(){
+    int a;
+    int *b;
+    cout << "a=?" <<endl;
+    cin >> a;
+    b=&a;
+    int *p=b;
+    cout <<"b=&a=" << b << endl;
+    cout <<"p=" << p << endl;
+    cout <<"*p="<< *p <<endl;
+}
+
 
 //dynamic array
 
@@ -36,6 +52,22 @@ void DynArray(){
 
 int main()
 {
-    DynArray();
+    cout << "x=?"<< endl;
+    cout << "1.Dynamic Arrays"<<endl;
+    cout << "2.Pointers_References"<<endl;
+    cout << "0.exit"<<endl;
+    cin >> x;
+    while(x!=0){
+    switch(x){
+        case 1:
+            DynArray();
+            break;
+        case 2:
+            pointers_references();
+            break;
+    }
+    cout<<"x=?"<<endl;
+    cin>>x;
+    }
     return 0;
 }
