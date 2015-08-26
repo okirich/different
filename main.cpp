@@ -44,9 +44,9 @@ void DynArray(){
 }
 */
 
-//queue;
+/* //queue;
 
-struct Node{
+struct Node{ //Структура узла очереди
     int data;
     Node *next;
 };
@@ -74,16 +74,16 @@ void AddQueue(Queue *Q){ // Добавление нового элемента �
     int value;
     cout<<"Value =\n";
     cin>> value;
-    Q->last->next=new Node; // Указатель "последнее" создает новый узел
-    Q->last=Q->last->next; // указатель "последнее" передвинул на только что созданный узел
     Q->last->data=value;
-    Q->last->next=0; // Указатель "последнее" теперь указывает на пустоту
+    Q->last->next=new Node; // Указатель "последний" создает новый узел
+    Q->last=Q->last->next; // указатель "последний" передвинул на только что созданный узел
+    Q->last->next=0; // Указатель "последний" теперь указывает на пустоту
     Q->size++;
     cout<< "element added\n";
 }
 
 int Top(Queue *Q){
-    return Q->first->next->data; // Вывод первого элемента
+    return Q->first->data; // Вывод первого элемента
 }
 
 void Delete(Queue *Q){ // Удаление элемента из очереди
@@ -97,13 +97,66 @@ void Delete(Queue *Q){ // Удаление элемента из очереди
 int Size(Queue *Q){
     return Q->size;
 }
+*/
 
 //stack
+
+struct Node{ //Cтруктура узла стэка
+    int data;
+    Node *link;
+};
+
+struct stack{
+    int size;
+    Node *top;
+    Node *temp;
+};
+
+
+void creation(stack *S){
+    S->top=0;
+    S->size=0;
+}
+
+void push(stack *S){
+    int value;
+    cout<<"value =\n";
+    cin>>value;
+    S->temp=new Node;
+    S->temp->data=value;
+    S->temp->link=S->top;
+    S->top=S->temp;
+    S->size++;
+}
+
+void pop(stack *S){
+    S->temp=S->top;
+    S->top=S->top->link;
+    delete S->temp;
+    S->size--;
+}
+
+int Top(stack *S){
+    return S->top->data;
+}
+
+int Size(stack*S){
+    return S->size;
+}
+
+bool isEmpty(stack *S){
+    if (S->top==0)
+        return true;
+    else return false;
+}
+//
+
 //heap
 //hash func
 
 int main() {
-    /*cout << "x=?"<< endl;
+    /* //DynArray
+    cout << "x=?"<< endl;
     cout << "1.Dynamic Arrays"<<endl;
     cout << "2.Pointers_References"<<endl;
     cout << "0.exit"<<endl;
@@ -121,7 +174,7 @@ int main() {
     cin>>x;
     }
      */
-
+    /* //Queue
     Queue Q;
     int choice;
     CreationQueue(&Q);
@@ -166,5 +219,48 @@ int main() {
         }
     }
     cout << "Bye\n";
+    */
+    // //stak
+    int choice;
+    stack S;
+    creation(&S);
+    cout<<"1.push\n";
+    cout<<"2.pop\n";
+    cout<<"3.top\n";
+    cout<<"4.size\n";
+    cout<<"0.exit\n";
+    while (choice != 0) {
+        cin>>choice;
+        switch (choice) {
+            case 1:
+            {
+                push(&S);
+                break;
+            }
+            case 2:
+            {
+                if(isEmpty(&S))
+                    cout<<"stack is empty\n";
+                else pop(&S);
+                break;
+            }
+            case 3:
+            {
+                if(isEmpty(&S))
+                    cout<<"stack is empty\n";
+                else cout<<Top(&S)<<endl;
+                break;
+            }
+            case 4:
+            {
+                if(isEmpty(&S))
+                    cout<<"stack is empty\n";
+                else cout<<Size(&S)<<endl;
+                break;
+            }            
+        }
+    }
+    cout<<"bye\n";
+     //
     return 0;
 }
