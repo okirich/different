@@ -36,7 +36,7 @@ bool inputmatrix::MatrixElement::matrixInput(MatrixElement *Name)
 	std::cin >> response;
 	if (response == 'y')
 		return true;
-	else
+	else 
 		return false;
 }
 
@@ -51,41 +51,45 @@ int inputmatrix::MatrixElement::newElement(MatrixElement *Name)
 	return nodeQuantity;
 }
 
-void inputmatrix::MatrixElement::showMatrix(MatrixElement *Name)
+double **inputmatrix::MatrixElement::createMatrix(MatrixElement *Name,double **Matrix)
 {
-	int CurrentRow=Name->NumberOfRow;
-	int CurrentColumn = -1;
-	for (int i = 0; i < nodeQuantity; i++)
+	while (Name != nullptr)
 	{
-		if (CurrentRow==Name->NumberOfRow)
+		//проблема указатель всегда в памяти 4 байта
+		int sizeOfMatrix = sizeof(**Matrix);
+		int sizeOfRow = sizeof(Matrix[0]);
+		int sizeOfElement = sizeof(Matrix[0][0]);
+		if (Name->NumberOfRow>(sizeOfMatrix/sizeOfRow)||(Name->NumberOfColumn>(sizeOfRow/sizeOfElement)))
 		{
-			if ((CurrentColumn==Name->NumberOfColumn)||(Name->NumberOfColumn<CurrentColumn))
+			//выделение памяти
+			double **tempMatrix = new double*[Name->NumberOfRow];
+			for (int i = 0; i < Name->NumberOfRow; i++)
+				tempMatrix[i] = new double[Name->NumberOfColumn];
+			//запись элементов уже внесенных в матрицу
+			for (int i = 0; i <(sizeOfRow/sizeOfElement); i++)
+				for (int j = 0; j <(sizeOfMatrix/((sizeOfMatrix/sizeOfElement)*sizeOfElement)); j++)
+				{
+					tempMatrix[i][j] = Matrix[i][j];
+				};
+			//запись элемента в матрицу
+			tempMatrix[Name->NumberOfRow-1][Name->NumberOfColumn-1] = Name->element;
+			//освобождение памяти занимаемой прошлым вариантом матрицы
+			for (int i = 0; i < (sizeof(Matrix) / sizeof(Matrix[0][0])); i++)
 			{
-				throw 1;
+				delete[] Matrix[i];
 			}
-			std::cout.width(20);
-			std::cout.setf(_IOSleft);
-			std::cout << Name->element<<' ';
-			CurrentColumn = Name->NumberOfColumn;
+			Matrix = tempMatrix;
 		}
 		else
 		{
-			if (Name->NumberOfRow<CurrentRow)
-			{
-				throw 1;
-			}
-			std::cout << '\n';
-			std::cout.width(20);
-			std::cout.setf(_IOSleft);
-			std::cout << Name->element << ' ';
-			CurrentRow = Name->NumberOfRow;
-			CurrentColumn = -1;
+			Matrix[Name->NumberOfRow][Name->NumberOfColumn] = Name->element;
 		}
 		Name = Name->next;
 	}
+	return Matrix;
 }
 
-double inputmatrix::MatrixElement::SumOfRow()
+void inputmatrix::MatrixElement::showMatrix(MatrixElement *Name)
 {
-	return 0.0;
+
 }

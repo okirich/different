@@ -2,7 +2,6 @@
 #define MATRIXELEMENT
 
 #include <iostream>
-#include <vector>
 
 namespace inputmatrix
 {
@@ -12,6 +11,7 @@ namespace inputmatrix
 		MatrixElement();
 		bool matrixInput(MatrixElement *);
 		int newElement(MatrixElement *);
+		double** createMatrix(MatrixElement *,double **Matrix);
 		void showMatrix(MatrixElement *);
 	private:
 		int nodeQuantity=1;
