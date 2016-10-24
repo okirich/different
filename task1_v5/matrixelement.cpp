@@ -51,45 +51,44 @@ int inputmatrix::MatrixElement::newElement(MatrixElement *Name)
 	return nodeQuantity;
 }
 
-double **inputmatrix::MatrixElement::createMatrix(MatrixElement *Name,double **Matrix)
+MatrixType* inputmatrix::MatrixElement::createMatrix(MatrixElement *Name, MatrixType *Matrix)
 {
 	while (Name != nullptr)
 	{
-		//проблема указатель всегда в памяти 4 байта
-		int sizeOfMatrix = sizeof(**Matrix);
-		int sizeOfRow = sizeof(Matrix[0]);
-		int sizeOfElement = sizeof(Matrix[0][0]);
-		if (Name->NumberOfRow>(sizeOfMatrix/sizeOfRow)||(Name->NumberOfColumn>(sizeOfRow/sizeOfElement)))
+
+		// в матрице нет соотв строки/столбца
+
+		if (Name->NumberOfRow>Matrix->size()-1||Name->NumberOfColumn>Matrix->at(0).size()-1)
 		{
 			//выделение памяти
-			double **tempMatrix = new double*[Name->NumberOfRow];
-			for (int i = 0; i < Name->NumberOfRow; i++)
-				tempMatrix[i] = new double[Name->NumberOfColumn];
-			//запись элементов уже внесенных в матрицу
-			for (int i = 0; i <(sizeOfRow/sizeOfElement); i++)
-				for (int j = 0; j <(sizeOfMatrix/((sizeOfMatrix/sizeOfElement)*sizeOfElement)); j++)
+
+			MatrixType tempMatrix(Name->NumberOfRow, std::vector<double>(Name->NumberOfColumn, 0));
+
+			//копирование элементов из старой матрицы в новую
+
+			for (int i = 0; i < Matrix->size(); i++)
+				for (int j = 0; j < Matrix->at(0).size(); j++)
 				{
-					tempMatrix[i][j] = Matrix[i][j];
-				};
-			//запись элемента в матрицу
+					tempMatrix[i][j] = Matrix->at(i).at(j);
+				}
+			
+			//копирование значения элемента в матрицу
 			tempMatrix[Name->NumberOfRow-1][Name->NumberOfColumn-1] = Name->element;
-			//освобождение памяти занимаемой прошлым вариантом матрицы
-			for (int i = 0; i < (sizeof(Matrix) / sizeof(Matrix[0][0])); i++)
-			{
-				delete[] Matrix[i];
-			}
-			Matrix = tempMatrix;
+
+			//отчищение памяти
+
+			Matrix->clear();
+
+			//новое значение матрицы 
+
+			Matrix = &tempMatrix; //проблема!
+
 		}
 		else
 		{
-			Matrix[Name->NumberOfRow][Name->NumberOfColumn] = Name->element;
+			Matrix->at(Name->NumberOfRow).at(Name->NumberOfColumn) = Name->element;
 		}
-		Name = Name->next;
 	}
 	return Matrix;
 }
 
-void inputmatrix::MatrixElement::showMatrix(MatrixElement *Name)
-{
-
-}

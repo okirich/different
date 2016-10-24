@@ -2,6 +2,9 @@
 #define MATRIXELEMENT
 
 #include <iostream>
+#include <vector>
+
+typedef std::vector<std::vector<double>> MatrixType;
 
 namespace inputmatrix
 {
@@ -11,15 +14,16 @@ namespace inputmatrix
 		MatrixElement();
 		bool matrixInput(MatrixElement *);
 		int newElement(MatrixElement *);
-		double** createMatrix(MatrixElement *,double **Matrix);
-		void showMatrix(MatrixElement *);
+		MatrixType* createMatrix(MatrixElement *, MatrixType *);
+		//void showMatrix(MatrixElement *);
 	private:
 		int nodeQuantity=1;
 		int NumberOfRow;
 		int NumberOfColumn;
 		double element;
 		MatrixElement* next;
-		double SumOfRow();
+		//double sumOfRow();
+		//void sortingOfRow
 	};
 }
 
