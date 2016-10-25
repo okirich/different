@@ -15,13 +15,16 @@ namespace inputmatrix
 		bool matrixInput(MatrixElement *);
 		int newElement(MatrixElement *);
 		MatrixType* createMatrix(MatrixElement *, MatrixType *);
-		//void showMatrix(MatrixElement *);
+		void showMatrix(MatrixType *);
 	private:
+		//поля данных
 		int nodeQuantity=1;
 		int NumberOfRow;
 		int NumberOfColumn;
 		double element;
 		MatrixElement* next;
+		//функции
+		void sizeOfTemp(MatrixElement*,MatrixType*,int*,int*);
 		//double sumOfRow();
 		//void sortingOfRow
 	};

@@ -58,22 +58,30 @@ MatrixType* inputmatrix::MatrixElement::createMatrix(MatrixElement *Name, Matrix
 
 		// в матрице нет соотв строки/столбца
 
-		if (Name->NumberOfRow>Matrix->size()-1||Name->NumberOfColumn>Matrix->at(0).size()-1)
+		if (Name->NumberOfRow>Matrix->size()||Name->NumberOfColumn>Matrix->at(0).size())
 		{
-			//выделение памяти
 
-			MatrixType tempMatrix(Name->NumberOfRow, std::vector<double>(Name->NumberOfColumn, 0));
+			//создание временной копии матрицы
+
+			//определяем размеры временной матрицы
+			int tempQrow;
+			int tempQcolumn;
+
+			sizeOfTemp(Name, Matrix, &tempQrow, &tempQcolumn);
+
+			MatrixType* tempMatrix=new MatrixType(tempQrow, std::vector<double>(tempQcolumn, 0));
 
 			//копирование элементов из старой матрицы в новую
 
 			for (int i = 0; i < Matrix->size(); i++)
 				for (int j = 0; j < Matrix->at(0).size(); j++)
 				{
-					tempMatrix[i][j] = Matrix->at(i).at(j);
+					tempMatrix->at(i).at(j) = Matrix->at(i).at(j);
 				}
 			
-			//копирование значения элемента в матрицу
-			tempMatrix[Name->NumberOfRow-1][Name->NumberOfColumn-1] = Name->element;
+			//копирование значения элемента в копию матрицы
+
+			tempMatrix->at(Name->NumberOfRow-1).at(Name->NumberOfColumn-1) = Name->element;
 
 			//отчищение памяти
 
@@ -81,14 +89,43 @@ MatrixType* inputmatrix::MatrixElement::createMatrix(MatrixElement *Name, Matrix
 
 			//новое значение матрицы 
 
-			Matrix = &tempMatrix; //проблема!
+			Matrix = tempMatrix;  
 
 		}
 		else
 		{
-			Matrix->at(Name->NumberOfRow).at(Name->NumberOfColumn) = Name->element;
+			Matrix->at(Name->NumberOfRow-1).at(Name->NumberOfColumn-1) = Name->element;
 		}
+
+		//берем следующий введенный элемент
+
+		Name = Name->next;
 	}
 	return Matrix;
 }
+
+void inputmatrix::MatrixElement::showMatrix(MatrixType*) 
+{
+
+}
+
+void inputmatrix::MatrixElement::sizeOfTemp(MatrixElement* Name,MatrixType* Matrix,int* tempQrow,int* tempQcolumn)
+{
+	if ((Name->NumberOfRow>Matrix->size()) && (Name->NumberOfColumn>Matrix->at(0).size())) //рядов и столбцов в новой больше чем в предыдущей
+	{
+		*tempQrow = Name->NumberOfRow;
+		*tempQcolumn = Name->NumberOfColumn;
+	}
+	else if (Name->NumberOfRow > Matrix->size()) //рядов в новой больше чем в текущей
+	{
+		*tempQrow = Name->NumberOfRow;
+		*tempQcolumn = Matrix->at(0).size();
+	}
+	else //столбцов в новой больше чем в текущей
+	{
+		*tempQrow = Matrix->size();
+		*tempQcolumn =Name->NumberOfColumn ;
+	}
+}
+
 
