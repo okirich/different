@@ -24,11 +24,11 @@ namespace inputmatrix
 		MatrixElement* next;
 		//функции
 		void sizeOfTemp(MatrixElement*,MatrixType*,int*,int*);
-		//double sumOfRow();
-		//void sortingOfRow
 	};
 
 	void showMatrix(MatrixType *);
+	std::vector<double>* sumOfRow(MatrixType *);
+	void sortingOfRow(std::vector<double>*);
 }
 
 #endif // MATRIXELEMENT

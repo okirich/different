@@ -12,14 +12,14 @@ bool inputmatrix::MatrixElement::matrixInput(MatrixElement *Name)
 {
 	char response;
 	std::cout << "index i of the element:";
-	while (!(std::cin >> Name->NumberOfRow)||(Name->NumberOfRow<0))
+	while (!(std::cin >> Name->NumberOfRow)||(Name->NumberOfRow<=0))
 	{
 		std::cout << "rong value" << '\n';
 		std::cin.clear();
 		std::cin.ignore();
 	}
 	std::cout << "index j of the element:";
-	while (!(std::cin >> Name->NumberOfColumn)||(Name->NumberOfColumn<0))
+	while (!(std::cin >> Name->NumberOfColumn)||(Name->NumberOfColumn<=0))
 	{
 		std::cout << "rong value" << '\n';
 		std::cin.clear();
@@ -104,17 +104,47 @@ MatrixType* inputmatrix::MatrixElement::createMatrix(MatrixElement *Name, Matrix
 	return Matrix;
 }
 
+std::vector<double>* inputmatrix::sumOfRow(MatrixType * Matrix)
+{
+	std::vector<double>* biggestabs=nullptr;
+	double sum = 0;
+	for (int i=0;i< Matrix->size();i++)
+	{
+		double currentsum = 0;
+		for (int j=0;j<Matrix->size();j++)
+		{
+			currentsum = currentsum + Matrix->at(i).at(j);
+		}
+		if (abs(currentsum)>abs(sum))
+		{
+			sum = currentsum;
+			biggestabs = &Matrix->at(i);
+		}
+	}
+	return biggestabs;
+}
+
+void inputmatrix::sortingOfRow(std::vector<double>* Row)
+{
+	if (Row->at[0]>0)
+	{
+		
+	}
+	else
+	{
+
+	}
+}
+
 void inputmatrix::showMatrix(MatrixType* Matrix) 
 {
 	for (MatrixType::iterator it=Matrix->begin(); it != Matrix->end(); ++it)
 	{
-		//где то здесь вызов подсчета суммы
 		for (std::vector<double>::iterator it2 = (*it).begin();it2 != (*it).end(); ++it2)
 		{
 			std::cout << *it2 << ' ';
 		}
 		std::cout << '\n';
-
 	}
 }
 
