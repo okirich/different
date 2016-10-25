@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 
+typedef std::vector<std::vector<double>> MatrixType;
+
 namespace inputmatrix
 {
 	class MatrixElement //класс элемента разреженной матрицы 
@@ -12,15 +14,21 @@ namespace inputmatrix
 		MatrixElement();
 		bool matrixInput(MatrixElement *);
 		int newElement(MatrixElement *);
-		void showMatrix(MatrixElement *);
+		MatrixType* createMatrix(MatrixElement *, MatrixType *);
 	private:
+		//поля данных
 		int nodeQuantity=1;
 		int NumberOfRow;
 		int NumberOfColumn;
 		double element;
 		MatrixElement* next;
-		double SumOfRow();
+		//функции
+		void sizeOfTemp(MatrixElement*,MatrixType*,int*,int*);
 	};
+
+	void showMatrix(MatrixType *);
+	std::vector<double>* sumOfRow(MatrixType *);
+	void sortingOfRow(std::vector<double>*);
 }
 
 #endif // MATRIXELEMENT

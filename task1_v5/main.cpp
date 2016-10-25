@@ -1,22 +1,21 @@
 #include <iostream>
 
 #include "matrixelement.h" 
-#include "sortingofelements.h" 
 
 using namespace inputmatrix;
 
 int main()
 {
+	MatrixType Matrix(1, std::vector<double>(1,0));
 	MatrixElement M0;
 	M0.newElement(&M0);
-	try
-	{
-		M0.showMatrix(&M0);
-	}
-	catch (int i)
-	{
-		std::cout << "caught exception:error while creating matrix" << '\n';
-	}
+	MatrixType *output = M0.createMatrix(&M0, &Matrix);
+	std::cout << "sorurce matrix" << '\n';
+	showMatrix(output);
+	std::vector<double>* row=sumOfRow(output);
+	sortingOfRow(row);
+	std::cout << "modified matrix" << '\n';
+	showMatrix(output);
 	system("pause");
     return 0;
 }
