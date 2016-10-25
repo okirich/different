@@ -104,9 +104,18 @@ MatrixType* inputmatrix::MatrixElement::createMatrix(MatrixElement *Name, Matrix
 	return Matrix;
 }
 
-void inputmatrix::MatrixElement::showMatrix(MatrixType*) 
+void inputmatrix::showMatrix(MatrixType* Matrix) 
 {
+	for (MatrixType::iterator it=Matrix->begin(); it != Matrix->end(); ++it)
+	{
+		//где то здесь вызов подсчета суммы
+		for (std::vector<double>::iterator it2 = (*it).begin();it2 != (*it).end(); ++it2)
+		{
+			std::cout << *it2 << ' ';
+		}
+		std::cout << '\n';
 
+	}
 }
 
 void inputmatrix::MatrixElement::sizeOfTemp(MatrixElement* Name,MatrixType* Matrix,int* tempQrow,int* tempQcolumn)
