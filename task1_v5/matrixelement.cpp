@@ -111,9 +111,9 @@ std::vector<double>* inputmatrix::sumOfRow(MatrixType * Matrix)
 	for (int i=0;i< Matrix->size();i++)
 	{
 		double currentsum = 0;
-		for (int j=0;j<Matrix->size();j++)
+		for (int j=0;j<Matrix->at(0).size();j++)
 		{
-			currentsum = currentsum + Matrix->at(i).at(j);
+			currentsum += Matrix->at(i).at(j);
 		}
 		if (abs(currentsum)>abs(sum))
 		{
@@ -126,14 +126,35 @@ std::vector<double>* inputmatrix::sumOfRow(MatrixType * Matrix)
 
 void inputmatrix::sortingOfRow(std::vector<double>* Row)
 {
-	if (Row->at[0]>0)
-	{
-		
-	}
-	else
-	{
-
-	}
+		for (int i = 0; i < Row->size() - 1; i++)
+		{
+			bool swaped = false;
+			for (int j = 0; j < Row->size() - i - 1; j++)
+			{
+				if (Row->at(0) > 0)
+				{
+					if (Row->at(j) > Row->at(j + 1))
+					{
+						double temp = Row->at(j);
+						Row->at(j) = Row->at(j + 1);
+						Row->at(j + 1) = temp;
+						swaped = true;
+					}
+				}
+				else
+				{
+					if (Row->at(j) < Row->at(j + 1))
+					{
+						double temp = Row->at(j);
+						Row->at(j) = Row->at(j + 1);
+						Row->at(j + 1) = temp;
+						swaped = true;
+					}
+				}
+			}
+			if (!swaped)
+				break;
+		}
 }
 
 void inputmatrix::showMatrix(MatrixType* Matrix) 
@@ -146,6 +167,7 @@ void inputmatrix::showMatrix(MatrixType* Matrix)
 		}
 		std::cout << '\n';
 	}
+	std::cout << '\n';
 }
 
 void inputmatrix::MatrixElement::sizeOfTemp(MatrixElement* Name,MatrixType* Matrix,int* tempQrow,int* tempQcolumn)
@@ -166,5 +188,3 @@ void inputmatrix::MatrixElement::sizeOfTemp(MatrixElement* Name,MatrixType* Matr
 		*tempQcolumn =Name->NumberOfColumn ;
 	}
 }
-
-
